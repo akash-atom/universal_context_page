@@ -42,6 +42,11 @@ document.addEventListener('DOMContentLoaded', function() {
     const bg3 = document.getElementById('bg_3');
     const bg3_2 = document.getElementById('bg_3_2');
     
+    // Get all highlight text elements
+    const highlight1Elements = document.querySelectorAll('.highlight_1');
+    const highlight2Elements = document.querySelectorAll('.highlight_2');
+    const highlight3Elements = document.querySelectorAll('.highlight_3');
+    
     // Check if all required elements exist
     const requiredElements = [
         { element: btn1, id: 'btn_1' },
@@ -53,6 +58,13 @@ document.addEventListener('DOMContentLoaded', function() {
         { element: text3, id: 'text_3' },
         { element: bg1, id: 'bg_1' }
     ];
+    
+    // Check for highlight elements
+    console.log('Found highlight elements:', {
+        highlight1: highlight1Elements.length,
+        highlight2: highlight2Elements.length,
+        highlight3: highlight3Elements.length
+    });
     
     for (let item of requiredElements) {
         if (!item.element) {
@@ -85,8 +97,8 @@ document.addEventListener('DOMContentLoaded', function() {
     
     // Set initial state of background divs (bg_1 will be shown on page load)
     gsap.set(bg1, {
-        width: "110px",
-        opacity: 0.32
+        width: "65px",
+        opacity: 1.0
     });
     
     // Set initial state for existing background elements only
@@ -142,10 +154,10 @@ document.addEventListener('DOMContentLoaded', function() {
         if (activeButton === btn1) {
             // Button 1 clicked - show p1_img and text_1, dim others
             
-            // Animate bg_1 to 110px width and opacity 0.32
+            // Animate bg_1 to 65px width and opacity 1.0
             tl.to(bg1, {
-                width: "110px",
-                opacity: 0.32,
+                width: "65px",
+                opacity: 1.0,
                 duration: 0.5,
                 ease: "power2.out"
             }, 0);
@@ -204,14 +216,41 @@ document.addEventListener('DOMContentLoaded', function() {
                 ease: "power2.out"
             }, 0);
             
+            // Change highlight text colors for btn_1
+            // Set highlight_1 to white
+            highlight1Elements.forEach(element => {
+                tl.to(element, {
+                    color: "#fff",
+                    duration: 0.5,
+                    ease: "power2.out"
+                }, 0);
+            });
+            
+            // Reset other highlight elements to gray
+            highlight2Elements.forEach(element => {
+                tl.to(element, {
+                    color: "#656363",
+                    duration: 0.5,
+                    ease: "power2.out"
+                }, 0);
+            });
+            
+            highlight3Elements.forEach(element => {
+                tl.to(element, {
+                    color: "#656363",
+                    duration: 0.5,
+                    ease: "power2.out"
+                }, 0);
+            });
+            
         } else if (activeButton === btn2) {
             // Button 2 clicked - show p2_img and text_2, dim others
             
-            // Animate bg_2 to 112px and bg_2_2 to 142px width with opacity 0.32 (only if they exist)
+            // Animate bg_2 to 90px and bg_2_2 to 120px width with opacity 1.0 (only if they exist)
             if (bg2) {
                 tl.to(bg2, {
-                    width: "112px",
-                    opacity: 0.32,
+                    width: "105px",
+                    opacity: 1.0,
                     duration: 0.5,
                     ease: "power2.out"
                 }, 0);
@@ -219,8 +258,8 @@ document.addEventListener('DOMContentLoaded', function() {
             
             if (bg2_2) {
                 tl.to(bg2_2, {
-                    width: "142px",
-                    opacity: 0.32,
+                    width: "138px",
+                    opacity: 1.0,
                     duration: 0.5,
                     ease: "power2.out"
                 }, 0);
@@ -280,14 +319,41 @@ document.addEventListener('DOMContentLoaded', function() {
                 ease: "power2.out"
             }, 0);
             
+            // Change highlight text colors for btn_2
+            // Set highlight_2 elements to white
+            highlight2Elements.forEach(element => {
+                tl.to(element, {
+                    color: "#fff",
+                    duration: 0.5,
+                    ease: "power2.out"
+                }, 0);
+            });
+            
+            // Reset other highlight elements to gray
+            highlight1Elements.forEach(element => {
+                tl.to(element, {
+                    color: "#656363",
+                    duration: 0.5,
+                    ease: "power2.out"
+                }, 0);
+            });
+            
+            highlight3Elements.forEach(element => {
+                tl.to(element, {
+                    color: "#656363",
+                    duration: 0.5,
+                    ease: "power2.out"
+                }, 0);
+            });
+            
         } else if (activeButton === btn3) {
             // Button 3 clicked - show p3_img and text_3, dim others
             
-            // Animate bg_3 to 190px and bg_3_2 to 158px width with opacity 0.32 (only if they exist)
+            // Animate bg_3 to 213px and bg_3_2 to 158px width with opacity 1.0 (only if they exist)
             if (bg3) {
                 tl.to(bg3, {
-                    width: "190px",
-                    opacity: 0.32,
+                    width: "213px",
+                    opacity: 1.0,
                     duration: 0.5,
                     ease: "power2.out"
                 }, 0);
@@ -296,7 +362,7 @@ document.addEventListener('DOMContentLoaded', function() {
             if (bg3_2) {
                 tl.to(bg3_2, {
                     width: "158px",
-                    opacity: 0.32,
+                    opacity: 1.0,
                     duration: 0.5,
                     ease: "power2.out"
                 }, 0);
@@ -355,6 +421,33 @@ document.addEventListener('DOMContentLoaded', function() {
                 duration: 0.5,
                 ease: "power2.out"
             }, 0);
+            
+            // Change highlight text colors for btn_3
+            // Set highlight_3 elements to white
+            highlight3Elements.forEach(element => {
+                tl.to(element, {
+                    color: "#fff",
+                    duration: 0.5,
+                    ease: "power2.out"
+                }, 0);
+            });
+            
+            // Reset other highlight elements to gray
+            highlight1Elements.forEach(element => {
+                tl.to(element, {
+                    color: "#656363",
+                    duration: 0.5,
+                    ease: "power2.out"
+                }, 0);
+            });
+            
+            highlight2Elements.forEach(element => {
+                tl.to(element, {
+                    color: "#656363",
+                    duration: 0.5,
+                    ease: "power2.out"
+                }, 0);
+            });
         }
     }
     
