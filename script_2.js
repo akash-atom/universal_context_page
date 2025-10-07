@@ -1,7 +1,6 @@
-
-
 // Webflow GSAP Animation Script
 // Wait for DOM to be ready
+
 document.addEventListener('DOMContentLoaded', function() {
     
     // Check screen size - only run on screens above 991px
@@ -117,9 +116,10 @@ document.addEventListener('DOMContentLoaded', function() {
         
         buttons.forEach(button => {
             if (button === activeButton) {
-                // Active button - white background
+                // Active button - white background with black text
                 gsap.to(button, {
                     backgroundColor: "#ffffff",
+                    color: "#000000",
                     duration: 0.3,
                     ease: "power2.out"
                 });
@@ -129,9 +129,10 @@ document.addEventListener('DOMContentLoaded', function() {
                 button.classList.remove('button-inactive');
                 
             } else {
-                // Inactive button - purple with 40% opacity
+                // Inactive button - purple with 40% opacity and default text color
                 gsap.to(button, {
                     backgroundColor: "rgba(142, 97, 216, 0.4)", // #8E61D8 with 40% opacity
+                    color: "", // Reset to default text color
                     duration: 0.3,
                     ease: "power2.out"
                 });
@@ -455,11 +456,12 @@ document.addEventListener('DOMContentLoaded', function() {
     function addHoverEffects() {
         const buttons = [btn1, btn2, btn3];
         
-        buttons.forEach(button => { 
-            // Mouse enter effect - white background on hover
+        buttons.forEach(button => {
+            // Mouse enter effect - white background with black text on hover
             button.addEventListener('mouseenter', function() {
                 gsap.to(button, {
                     backgroundColor: "#ffffff",
+                    color: "#000000",
                     duration: 0.2,
                     ease: "power2.out"
                 });
@@ -468,16 +470,18 @@ document.addEventListener('DOMContentLoaded', function() {
             // Mouse leave effect - return to original state
             button.addEventListener('mouseleave', function() {
                 if (button.classList.contains('button-active')) {
-                    // Keep white if it's the active button
+                    // Keep white background with black text if it's the active button
                     gsap.to(button, {
                         backgroundColor: "#ffffff",
+                        color: "#000000",
                         duration: 0.2,
                         ease: "power2.out"
                     });
                 } else {
-                    // Return to purple with 40% opacity if inactive
+                    // Return to purple with 40% opacity and default text color if inactive
                     gsap.to(button, {
                         backgroundColor: "rgba(142, 97, 216, 0.4)",
+                        color: "", // Reset to default text color
                         duration: 0.2,
                         ease: "power2.out"
                     });
@@ -488,33 +492,45 @@ document.addEventListener('DOMContentLoaded', function() {
     
     // Add click event listeners for buttons
     btn1.addEventListener('click', function() {
+        stopAutoClick(); // Stop auto-click permanently
         animateElements(btn1);
+        console.log('Manual click detected - auto-click stopped');
     });
     
     btn2.addEventListener('click', function() {
+        stopAutoClick(); // Stop auto-click permanently
         animateElements(btn2);
+        console.log('Manual click detected - auto-click stopped');
     });
     
     btn3.addEventListener('click', function() {
+        stopAutoClick(); // Stop auto-click permanently
         animateElements(btn3);
+        console.log('Manual click detected - auto-click stopped');
     });
     
     // Add click event listeners for images
     p1Img.addEventListener('click', function() {
+        stopAutoClick(); // Stop auto-click permanently
         animateElements(btn1);
+        console.log('Manual image click detected - auto-click stopped');
     });
     
     // Add click listeners to all p2_img elements
     p2ImgElements.forEach(img => {
         img.addEventListener('click', function() {
+            stopAutoClick(); // Stop auto-click permanently
             animateElements(btn2);
+            console.log('Manual image click detected - auto-click stopped');
         });
     });
     
     // Add click listeners to all p3_img elements
     p3ImgElements.forEach(img => {
         img.addEventListener('click', function() {
+            stopAutoClick(); // Stop auto-click permanently
             animateElements(btn3);
+            console.log('Manual image click detected - auto-click stopped');
         });
     });
     
@@ -525,12 +541,43 @@ document.addEventListener('DOMContentLoaded', function() {
     // This ensures the page loads with the correct initial state
     animateElements(btn1);
     
+    // Auto-click functionality - cycle through buttons every 3 seconds
+    let currentButtonIndex = 0;
+    const buttons = [btn1, btn2, btn3];
+    let autoClickInterval;
+    
+    function startAutoClick() {
+        autoClickInterval = setInterval(function() {
+            // Move to next button
+            currentButtonIndex = (currentButtonIndex + 1) % buttons.length;
+            
+            // Click the current button
+            const currentButton = buttons[currentButtonIndex];
+            animateElements(currentButton);
+            
+            console.log(`Auto-clicking button ${currentButtonIndex + 1}`);
+        }, 3000); // 3 seconds
+    }
+    
+    function stopAutoClick() {
+        if (autoClickInterval) {
+            clearInterval(autoClickInterval);
+            autoClickInterval = null;
+        }
+    }
+    
+    // Start auto-click after initial setup
+    startAutoClick();
+    
     // Handle window resize - disable/enable animations based on screen size
     let resizeTimeout;
     window.addEventListener('resize', function() {
         clearTimeout(resizeTimeout);
         resizeTimeout = setTimeout(function() {
             if (!checkScreenSize()) {
+                // Stop auto-click when screen is too small
+                stopAutoClick();
+                
                 // Screen is now too small - remove all event listeners and reset styles
                 [btn1, btn2, btn3].forEach(button => {
                     button.replaceWith(button.cloneNode(true));

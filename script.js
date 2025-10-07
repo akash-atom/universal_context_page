@@ -185,4 +185,93 @@ document.addEventListener('DOMContentLoaded', function() {
     console.log('Block animation system initialized successfully!');
     console.log('Initial state: Red block visible, Green and Blue blocks hidden');
     console.log('Line drawing animations are ready!');
+    
+    // Add CSS for button text styling
+    const style = document.createElement('style');
+    style.textContent = `
+        /* Button states for JavaScript control */
+        .button-active {
+            background-color: #000 !important;
+            color: #fff !important;
+            transition: all 0.3s ease;
+        }
+        
+        .button-active * {
+            color: #000 !important;
+        }
+        
+        .button-inactive {
+            background-color: #fff !important;
+            color: #000 !important;
+            transition: all 0.3s ease;
+        }
+        
+        .button-inactive * {
+            color: #000 !important;
+        }
+        
+        /* Hover effects - same as active state */
+        .button-inactive:hover {
+            background-color: #000 !important;
+            color: #fff !important;
+        }
+        
+        .button-inactive:hover * {
+            color: #000 !important;
+        }
+        
+        /* Active button hover (optional - keeps same styling) */
+        .button-active:hover {
+            background-color: #000 !important;
+            color: #fff !important;
+        }
+        
+        .button-active:hover * {
+            color: #000 !important;
+        }
+    `;
+    document.head.appendChild(style);
+    
+    // Auto-click functionality
+    let currentButtonIndex = 0;
+    const buttons = [btn1, btn2, btn3];
+    let autoClickInterval;
+    
+    function startAutoClick() {
+        // Start the auto-click cycle after initial delay
+        autoClickInterval = setInterval(() => {
+            // Click the current button
+            buttons[currentButtonIndex].click();
+            console.log(`🔄 Auto-clicking button ${currentButtonIndex + 1}`);
+            
+            // Move to next button
+            currentButtonIndex = (currentButtonIndex + 1) % buttons.length;
+        }, 3000); // 3 seconds interval
+    }
+    
+    function stopAutoClick() {
+        if (autoClickInterval) {
+            clearInterval(autoClickInterval);
+            autoClickInterval = null;
+            console.log('⏹️ Auto-click stopped');
+        }
+    }
+    
+    // Start auto-click after initial page load animation completes
+    setTimeout(() => {
+        startAutoClick();
+        console.log('▶️ Auto-click started - cycling every 3 seconds');
+    }, 2000); // Wait 2 seconds after page load to start auto-click
+    
+    // Optional: Stop auto-click when user manually clicks a button
+    // Uncomment the lines below if you want to stop auto-click on manual interaction
+    /*
+    buttons.forEach((button, index) => {
+        button.addEventListener('click', function() {
+            stopAutoClick();
+            currentButtonIndex = index; // Update current index to match clicked button
+            console.log('👆 Manual click detected - auto-click stopped');
+        });
+    });
+    */
 });
